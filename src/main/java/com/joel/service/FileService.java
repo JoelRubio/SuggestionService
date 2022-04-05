@@ -2,7 +2,9 @@ package com.joel.service;
 
 import java.util.List;
 
+import com.joel.domain.City;
+
 public interface FileService {
 
-	List<String[]> parseFile(String file);
+	List<City> parseFile(String file);
 }

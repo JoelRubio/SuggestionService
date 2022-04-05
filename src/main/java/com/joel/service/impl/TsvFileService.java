@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.joel.domain.City;
+import com.joel.domain.Country;
 import com.joel.service.FileService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -27,13 +29,14 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class TsvFileService implements FileService {
 
-	private static final String TAB_SEPARATOR = "\t";
-	private List<String[]> rows;
+	private static final String TAB_CHARACTER = "\t";
+	private static final int INDEX_NAME       = 1;
+	private static final int INDEX_LATITUDE   = 4;
+	private static final int INDEX_LONGITUDE  = 5;
+	private static final int INDEX_COUNTRY    = 8;
+	private static final int INDEX_CODE       = 10;
+	private List<City> cities                 = new ArrayList<>();
 	
-	public TsvFileService() {
-		
-		rows = new ArrayList<>();
-	}
 	
 	/**
 	 * Lee un archivo y retorna sus líneas o filas 
@@ -45,10 +48,10 @@ public class TsvFileService implements FileService {
 	 * @return
 	 */
 	@Override
-	public List<String[]> parseFile(String file) {
+	public List<City> parseFile(String file) {
 		
-		if (!rows.isEmpty())
-			return rows;
+		if (!cities.isEmpty())
+			return cities;
 		
 		log.info("Parsing TSV file...");
 		
@@ -56,10 +59,10 @@ public class TsvFileService implements FileService {
 		
 		try {
 			
-			rows = Files.lines(filePath)
-					.parallel()
-					.map(line -> line.split(TAB_SEPARATOR))
-					.collect(Collectors.toList());
+			cities = Files.lines(filePath)
+						.parallel()
+						.map(this::mapToCity)
+						.collect(Collectors.toList());
 			
 		} catch (IOException exception) {
 			
@@ -72,6 +75,18 @@ public class TsvFileService implements FileService {
 		
 		log.info("TSV File parsed");
 		
-		return rows;
+		return cities;
+	}
+	
+	private City mapToCity(String fileRow) {
+		
+		String[] splittedRow = fileRow.split(TAB_CHARACTER);
+		
+		return new City(splittedRow[INDEX_NAME], 
+						splittedRow[INDEX_LATITUDE], 
+						splittedRow[INDEX_LONGITUDE], 
+						Country.getCountry(splittedRow[INDEX_COUNTRY]),
+						splittedRow[INDEX_CODE],
+						0.0);
 	}
 }

@@ -1,11 +1,9 @@
 package com.joel.service;
 
-import java.util.List;
-
-import com.joel.model.SuggestionRequestModel;
-import com.joel.model.SuggestionResponseModel;
+import com.joel.domain.CityQuery;
+import com.joel.model.CityResponseModel;
 
 public interface SuggestionService {
 
-	List<SuggestionResponseModel> getSuggestion(SuggestionRequestModel suggestionRequest);
+	Iterable<CityResponseModel> getSuggestion(CityQuery query);
 }

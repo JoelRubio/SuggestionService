@@ -9,7 +9,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @EqualsAndHashCode
-public class SuggestionResponseModel {
+public class CityResponseModel {
 
 	@SuppressWarnings("unused")
 	private String name;

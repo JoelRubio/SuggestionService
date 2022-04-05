@@ -16,8 +16,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.joel.model.SuggestionRequestModel;
-import com.joel.model.SuggestionResponseModel;
+import com.joel.domain.CityQuery;
+import com.joel.domain.Latitude;
+import com.joel.domain.Longitude;
+import com.joel.domain.Name;
+import com.joel.model.CityResponseModel;
 import com.joel.service.SuggestionService;
 
 
@@ -45,24 +48,24 @@ public class SuggestionControllerTest {
 		String nameReq      = "London";
 		String latitudeReq  = "43.70011";
 		String longitudeReq = "-79.4163";
-		SuggestionRequestModel suggestionRequest = new SuggestionRequestModel(nameReq, latitudeReq, longitudeReq);
+		CityQuery query = new CityQuery(new Name(nameReq), new Latitude(latitudeReq), new Longitude(longitudeReq));
 		
 		String nameRes      = "London, ON, Canada";
 		String latitudeRes  = "42.98339";
 		String longitudeRes = "-81.23304";
 		double scoreRes     = 0.1;
-		SuggestionResponseModel suggestion1 = SuggestionResponseModel.builder()
+		CityResponseModel city1 = CityResponseModel.builder()
 				.name(nameRes)
 				.latitude(latitudeRes)
 				.longitude(longitudeRes)
 				.score(scoreRes)
 				.build();
 		
-		List<SuggestionResponseModel> suggestionResponse = List.of(suggestion1);
+		List<CityResponseModel> citiesResponse = List.of(city1);
 		String request = String.format("%s?q=%s&latitude=%s&longitude=%s", uri, nameReq, latitudeReq, longitudeReq);
 		
 		//when
-		when(suggestionService.getSuggestion(suggestionRequest)).thenReturn(suggestionResponse);
+		when(suggestionService.getSuggestion(query)).thenReturn(citiesResponse);
 		
 		//then
 		this.mockMvc

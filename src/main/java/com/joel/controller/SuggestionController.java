@@ -1,15 +1,19 @@
 package com.joel.controller;
 
-import java.util.List;
+import java.util.Map;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.joel.model.SuggestionRequestModel;
-import com.joel.model.SuggestionResponseModel;
+import com.joel.domain.CityQuery;
+import com.joel.exception.IllegalQueryException;
+import com.joel.factory.QueryFactory;
+import com.joel.model.CityRequestModel;
+import com.joel.model.CityResponseModel;
 import com.joel.service.SuggestionService;
 
 
@@ -46,10 +50,14 @@ public class SuggestionController {
 	 * 		   usuario, si no, una lista vacía.
 	 */
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<SuggestionResponseModel>> get(SuggestionRequestModel suggestionRequest) {
+	@ResponseStatus(code = HttpStatus.OK)
+	public Map<String, Iterable<CityResponseModel>> get(CityRequestModel cityRequest) {
 		
-		List<SuggestionResponseModel> response = this.suggestionService.getSuggestion(suggestionRequest);
+		if (cityRequest.isEmpty())
+			throw new IllegalQueryException("La consulta no puede estar vacía");
 		
-		return ResponseEntity.ok(response);
+		CityQuery query = QueryFactory.getQuery(cityRequest);
+		
+		return Map.of("suggestions", this.suggestionService.getSuggestion(query));
 	}
 }

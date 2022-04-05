@@ -10,6 +10,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.joel.domain.City;
+import com.joel.domain.Country;
+
 
 @ExtendWith(MockitoExtension.class)
 public class TsvFileServiceTest {
@@ -21,9 +24,10 @@ public class TsvFileServiceTest {
 	public void getLinesOfTsvFile() {
 		
 		//given
-		String filePath                 = "somePath.tsv";
-		List<String[]> expectedResponse = List.of(new String[] {"line1"}, new String[] {"line2"});
-		List<String[]> actualResponse;
+		String filePath = "somePath.tsv";
+		List<City> actualResponse;
+		List<City> expectedResponse = List.of(new City("name1", "latitude1", "longitude1", Country.USA, "MD", 0), 
+											  new City("name2", "latitude2", "longitude2", Country.Canada, "CA", 0));
 		
 		//when
 		when(fileService.parseFile(filePath)).thenReturn(expectedResponse);

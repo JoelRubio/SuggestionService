@@ -2,6 +2,10 @@ spring:
   application:
     name: suggestion-service
 
+server:
+  error:
+    include-message: always
+
 ws:
   endpoint: suggestions
   file:

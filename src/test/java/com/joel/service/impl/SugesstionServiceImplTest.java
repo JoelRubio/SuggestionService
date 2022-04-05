@@ -11,8 +11,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.joel.model.SuggestionRequestModel;
-import com.joel.model.SuggestionResponseModel;
+import com.joel.domain.CityQuery;
+import com.joel.domain.Latitude;
+import com.joel.domain.Longitude;
+import com.joel.domain.Name;
+import com.joel.model.CityResponseModel;
 import com.joel.service.FileService;
 
 
@@ -30,21 +33,21 @@ public class SugesstionServiceImplTest {
 	public void getSuggestionOfCities() {
 		
 		//given
-//		List<String[]> rows                    = List.of();
+//		List<City> cities                      = List.of();
 //		String filePath                        = "somePath.tsv";
-		SuggestionRequestModel request         = new SuggestionRequestModel("London, ON, Canada", "42.98339", "-81.23304");  
-		List<SuggestionResponseModel> expected = List.of();
-		List<SuggestionResponseModel> actualResponse;
+		CityQuery query = new CityQuery(new Name("London, ON, Canada"), new Latitude("42.98339"), new Longitude("-81.23304"));
+		List<CityResponseModel> expected = List.of();
+		Iterable<CityResponseModel> actualResponse;
 		
 		//when
-		//when(fileService.parseFile(filePath)).thenReturn(rows);
-		when(suggestionService.getSuggestion(request)).thenReturn(expected);
+		//when(fileService.parseFile(filePath, request)).thenReturn(rows);
+		when(suggestionService.getSuggestion(query)).thenReturn(expected);
 		
 		//execute
-		actualResponse = suggestionService.getSuggestion(request);
+		actualResponse = suggestionService.getSuggestion(query);
 		
 		//then
-		//verify(fileService, times(1)).parseFile(filePath);
+		//verify(fileService, times(1)).parseFile(filePath, request);
 		
 		assertThat(actualResponse).isEqualTo(expected);
 	}

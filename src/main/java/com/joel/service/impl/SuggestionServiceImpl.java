@@ -1,13 +1,18 @@
 package com.joel.service.impl;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.joel.model.SuggestionRequestModel;
-import com.joel.model.SuggestionResponseModel;
+import com.joel.domain.City;
+import com.joel.domain.CityQuery;
+import com.joel.domain.Latitude;
+import com.joel.domain.Longitude;
+import com.joel.domain.Name;
+import com.joel.model.CityResponseModel;
 import com.joel.service.FileService;
 import com.joel.service.SuggestionService;
 
@@ -27,10 +32,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 public class SuggestionServiceImpl implements SuggestionService {
-
-	private static final int INDEX_NAME      = 1;
-	private static final int INDEX_LATITUDE  = 4;
-	private static final int INDEX_LONGITUDE = 5;
 
 	@Value("${ws.file.path}")
 	private String filePath;
@@ -53,43 +54,108 @@ public class SuggestionServiceImpl implements SuggestionService {
 	 * 		   lista vacía.
 	 */
 	@Override
-	public List<SuggestionResponseModel> getSuggestion(SuggestionRequestModel suggestionRequest) {
+	public Iterable<CityResponseModel> getSuggestion(CityQuery query) {
 		
-		//read file and get input
-		List<String[]> rows = this.fileService.parseFile(filePath);
 		
-		if (rows.isEmpty())
+		List<City> cities = this.fileService.parseFile(filePath);
+		
+		if (cities.isEmpty())
 			return List.of();
 		
-		log.info("Iterating file content...");
+		log.info("Scanning cities...");
 		
-		//iterate the content and find matches
-		List<String[]> result = rows.parallelStream()
-			.filter(row -> row[INDEX_NAME].contains(suggestionRequest.getQ()))
-			.collect(Collectors.toList());
+		List<City> matchedCities = getMatchCities(cities, query);
 		
-		log.info("Finish iterating file content");
+		log.info("Cities scanned");
 		
-		if (result.isEmpty())
+		if (matchedCities.isEmpty())
 			return List.of();
 		
 		
 		log.info("Assembling content");
 		
-		//assembly the content
-		List<SuggestionResponseModel> response = result.stream()
-				.map(row -> SuggestionResponseModel.builder()
-						.name(row[INDEX_NAME])
-						.latitude(row[INDEX_LATITUDE])
-						.longitude(row[INDEX_LONGITUDE])
-						.score(0)
-						.build())
-				.collect(Collectors.toList());
-		
-		response.forEach(System.out::println);
+		List<CityResponseModel> response = buildResponse(matchedCities);
 		
 		log.info("Finish assembling content");
 		
 		return response;
+	}
+	
+	private List<City> getMatchCities(List<City> cities, CityQuery query) {
+		
+		return cities.parallelStream()
+			.filter(city -> filterCity(city, query))
+			.collect(Collectors.toList());
+	}
+	
+	private boolean validateName(City city, Name name) {
+		
+		if (city.getName().equals(name.getValue())) {
+			
+			city.setScore(3.333333333);
+			
+			return true;
+		} 
+		
+		if (city.getName().toLowerCase().contains(name.getValue().toLowerCase())) {
+		
+			city.setScore(3.333333333/2.0);
+			
+			return true;
+		}
+		
+		return false;
+	}
+	
+	private void validateLatitude(City city, Latitude latitude) {
+		
+		if (city.getLatitude().equals(latitude.toString())) {
+			
+			city.setScore(3.333333333);
+		}
+	}
+	
+	private void validateLongitude(City city, Longitude longitude) {
+		
+		if (city.getLongitude().equals(longitude.toString())) {
+			
+			city.setScore(3.333333333);
+		}
+	}
+	
+	private boolean filterCity(City city, CityQuery query) {
+		
+		for (Object value : query.getAvailableValues()) {
+			
+			if (value instanceof Name) {
+				
+				if (!validateName(city, (Name) value))
+					return false;
+				
+			} else if (value instanceof Latitude) {
+				
+				validateLatitude(city, (Latitude) value);
+				
+			} else if (value instanceof Longitude) {
+				
+				validateLongitude(city, (Longitude) value);
+			}
+		}
+		
+		return true;
+	}
+	
+	private List<CityResponseModel> buildResponse(List<City> matchedCities) {
+		
+		return matchedCities.stream()
+			.map(city -> CityResponseModel.builder()
+					.name(String.format("%s, %s, %s", city.getName(), city.getCode(), city.getCountry().toString()))
+					.latitude(city.getLatitude())
+					.longitude(city.getLongitude())
+					.score(city.getScore())
+					.build())
+			.sorted(Comparator.comparingDouble(CityResponseModel::getScore)
+						.reversed())
+			.collect(Collectors.toList());
 	}
 }
