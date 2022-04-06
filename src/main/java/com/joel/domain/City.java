@@ -3,6 +3,11 @@ package com.joel.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+
+/**
+ * @author Joel Rubio
+ *
+ */
 @Data
 @AllArgsConstructor
 public class City {
@@ -19,6 +24,9 @@ public class City {
 		this.score += score;
 	}
 	
+	/**
+	 *
+	 */
 	public City clone() {
 		
 		City clonedCity = new City(this.name, this.latitude, 

@@ -24,7 +24,7 @@ import com.joel.service.SuggestionService;
  * de sugerencias de ciudades
  * dado un conjunto de parámetros.
  * 
- * @author joel
+ * @author Joel Rubio
  *
  */
 @RestController

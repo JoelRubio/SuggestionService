@@ -5,6 +5,12 @@ import com.joel.exception.IllegalQueryException;
 import lombok.Getter;
 import lombok.Setter;
 
+
+/**
+ * @author Joel Rubio
+ *
+ */
+
 @Getter
 @Setter
 public class Name {

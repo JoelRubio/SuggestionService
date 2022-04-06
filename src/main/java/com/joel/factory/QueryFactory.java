@@ -6,8 +6,18 @@ import com.joel.domain.Longitude;
 import com.joel.domain.Name;
 import com.joel.model.CityRequestModel;
 
+
+/**
+ * @author Joel Rubio
+ *
+ */
 public class QueryFactory {
 
+	
+	/**
+	 * @param cityRequest
+	 * @return
+	 */
 	public static CityQuery getQuery(CityRequestModel cityRequest) {
 		
 		return new CityQuery(new Name(cityRequest.getName()), 

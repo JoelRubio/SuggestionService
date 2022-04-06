@@ -7,6 +7,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+
+/**
+ * @author Joel Rubio
+ *
+ */
 @AllArgsConstructor
 @Getter
 @Setter

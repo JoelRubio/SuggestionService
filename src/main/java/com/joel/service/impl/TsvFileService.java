@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
  * los datos que se encuentran en un
  * archivo tipo .tsv a un conjunto de filas.
  * 
- * @author joel
+ * @author Joel Rubio
  *
  */
 @Slf4j

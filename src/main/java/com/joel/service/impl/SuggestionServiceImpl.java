@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  * parámetros dados por el usuario
  * y el conjunto de datos disponible.
  * 
- * @author joel
+ * @author Joel Rubio
  *
  */
 @Slf4j
@@ -83,6 +83,12 @@ public class SuggestionServiceImpl implements SuggestionService {
 		return response;
 	}
 	
+	
+	/**
+	 * @param cities
+	 * @param query
+	 * @return
+	 */
 	private List<City> getMatchCities(List<City> cities, CityQuery query) {
 		
 		return cities.parallelStream()
@@ -90,6 +96,12 @@ public class SuggestionServiceImpl implements SuggestionService {
 			.collect(Collectors.toList());
 	}
 	
+	
+	/**
+	 * @param city
+	 * @param name
+	 * @return
+	 */
 	private boolean validateName(City city, Name name) {
 		
 		if (city.getName().equals(name.getValue())) {
@@ -117,6 +129,11 @@ public class SuggestionServiceImpl implements SuggestionService {
 //
 //	0.1 = differs from more than two degrees
 	
+	
+	/**
+	 * @param city
+	 * @param latitude
+	 */
 	private void validateLatitude(City city, Latitude latitude) {
 		
 		if (city.getLatitude().equals(latitude.toString())) {
@@ -137,6 +154,11 @@ public class SuggestionServiceImpl implements SuggestionService {
 		}
 	}
 	
+	
+	/**
+	 * @param city
+	 * @param longitude
+	 */
 	private void validateLongitude(City city, Longitude longitude) {
 		
 		if (city.getLongitude().equals(longitude.toString())) {
@@ -157,6 +179,12 @@ public class SuggestionServiceImpl implements SuggestionService {
 		}
 	}
 	
+	
+	/**
+	 * @param city
+	 * @param query
+	 * @return
+	 */
 	private boolean filterCity(City city, CityQuery query) {
 		
 		for (Object value : query.getAvailableValues()) {
@@ -179,6 +207,11 @@ public class SuggestionServiceImpl implements SuggestionService {
 		return true;
 	}
 	
+	
+	/**
+	 * @param matchedCities
+	 * @return
+	 */
 	private List<CityResponseModel> buildResponse(List<City> matchedCities) {
 		
 		return matchedCities.stream()

@@ -1,5 +1,11 @@
 package com.joel.domain;
 
+
+/**
+ * @author Joel Rubio
+ *
+ */
+
 public enum Country {
 
 	USA,

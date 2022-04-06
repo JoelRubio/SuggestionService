@@ -7,6 +7,11 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
+
+/**
+ * @author Joel Rubio
+ *
+ */
 @Getter
 @EqualsAndHashCode
 @AllArgsConstructor
@@ -24,6 +29,9 @@ public class CityRequestModel implements Serializable {
 		this.name = q;
 	}
 	
+	/**
+	 * @return
+	 */
 	public boolean isEmpty() {
 		
 		return name == null && latitude == null && longitude == null;
