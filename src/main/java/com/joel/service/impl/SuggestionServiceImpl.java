@@ -1,5 +1,6 @@
 package com.joel.service.impl;
 
+import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,6 +16,7 @@ import com.joel.domain.Name;
 import com.joel.model.CityResponseModel;
 import com.joel.service.FileService;
 import com.joel.service.SuggestionService;
+import com.joel.utils.GPSUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -92,14 +94,14 @@ public class SuggestionServiceImpl implements SuggestionService {
 		
 		if (city.getName().equals(name.getValue())) {
 			
-			city.setScore(3.333333333);
+			city.setScore(0.333333333);
 			
 			return true;
 		} 
 		
 		if (city.getName().toLowerCase().contains(name.getValue().toLowerCase())) {
 		
-			city.setScore(3.333333333/2.0);
+			city.setScore(0.333333333/2.0);
 			
 			return true;
 		}
@@ -107,11 +109,31 @@ public class SuggestionServiceImpl implements SuggestionService {
 		return false;
 	}
 	
+//	0.333333333 = equal
+//
+//	0.3 = equal in integer part
+//
+//	0.28 = differs from one to two degree
+//
+//	0.1 = differs from more than two degrees
+	
 	private void validateLatitude(City city, Latitude latitude) {
 		
 		if (city.getLatitude().equals(latitude.toString())) {
 			
-			city.setScore(3.333333333);
+			city.setScore(0.333333333);
+			
+		} else if (GPSUtils.areEqualInIntegerPart(new BigDecimal(city.getLatitude()), latitude.getValue())) {
+						
+			city.setScore(0.3);
+			
+		} else if (GPSUtils.differFromSpecificDegree(new BigDecimal(city.getLatitude()), latitude.getValue(), 1)) {
+			
+			city.setScore(0.28);
+			
+		} else if (GPSUtils.differFromSpecificDegree(new BigDecimal(city.getLatitude()), latitude.getValue(), 2)) {
+			
+			city.setScore(0.1);
 		}
 	}
 	
@@ -119,7 +141,19 @@ public class SuggestionServiceImpl implements SuggestionService {
 		
 		if (city.getLongitude().equals(longitude.toString())) {
 			
-			city.setScore(3.333333333);
+			city.setScore(0.333333333);
+			
+		} else if (GPSUtils.areEqualInIntegerPart(new BigDecimal(city.getLongitude()), longitude.getValue())) {
+			
+			city.setScore(0.3);
+		
+		} else if (GPSUtils.differFromSpecificDegree(new BigDecimal(city.getLongitude()), longitude.getValue(), 1)) {
+		
+			city.setScore(0.28);
+		
+		} else if (GPSUtils.differFromSpecificDegree(new BigDecimal(city.getLongitude()), longitude.getValue(), 2)) {
+		
+			city.setScore(0.1);
 		}
 	}
 	
@@ -152,10 +186,9 @@ public class SuggestionServiceImpl implements SuggestionService {
 					.name(String.format("%s, %s, %s", city.getName(), city.getCode(), city.getCountry().toString()))
 					.latitude(city.getLatitude())
 					.longitude(city.getLongitude())
-					.score(city.getScore())
+					.score(Math.round(city.getScore() * 10.0) / 10.0)
 					.build())
-			.sorted(Comparator.comparingDouble(CityResponseModel::getScore)
-						.reversed())
+			.sorted(Comparator.comparingDouble(CityResponseModel::getScore).reversed())
 			.collect(Collectors.toList());
 	}
 }

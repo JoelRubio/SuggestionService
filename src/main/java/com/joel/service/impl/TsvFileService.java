@@ -51,7 +51,7 @@ public class TsvFileService implements FileService {
 	public List<City> parseFile(String file) {
 		
 		if (!cities.isEmpty())
-			return cities;
+			return cloneList(cities);
 		
 		log.info("Parsing TSV file...");
 		
@@ -75,7 +75,14 @@ public class TsvFileService implements FileService {
 		
 		log.info("TSV File parsed");
 		
-		return cities;
+		return cloneList(cities);
+	}
+	
+	private List<City> cloneList(List<City> cities) {
+		
+		return cities.parallelStream()
+			.map(city -> city.clone())
+			.collect(Collectors.toList());
 	}
 	
 	private City mapToCity(String fileRow) {

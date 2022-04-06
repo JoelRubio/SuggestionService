@@ -18,4 +18,13 @@ public class City {
 		
 		this.score += score;
 	}
+	
+	public City clone() {
+		
+		City clonedCity = new City(this.name, this.latitude, 
+								  this.longitude, this.country, 
+								  this.code, this.score);
+		
+		return clonedCity;
+	}
 }
