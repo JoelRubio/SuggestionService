@@ -9,5 +9,4 @@ public class SuggestionServiceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SuggestionServiceApplication.class, args);
 	}
-
 }

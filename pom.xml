@@ -16,6 +16,7 @@
 	<description>REST API endpoint that provides auto-complete suggestions for large cities.</description>
 	<properties>
 		<java.version>11</java.version>
+		<spring-cloud-gcp.version>3.2.0</spring-cloud-gcp.version>
 		<spring-cloud.version>2021.0.1</spring-cloud.version>
 	</properties>
 	<dependencies>
@@ -39,8 +40,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.google.cloud</groupId>
-			<artifactId>google-cloud-nio</artifactId>
-			<version>0.123.27</version>
+			<artifactId>spring-cloud-gcp-starter-storage</artifactId>
 		</dependency>
 	</dependencies>
 	<dependencyManagement>
@@ -49,6 +49,13 @@
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-dependencies</artifactId>
 				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>com.google.cloud</groupId>
+				<artifactId>spring-cloud-gcp-dependencies</artifactId>
+				<version>${spring-cloud-gcp.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
