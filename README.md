@@ -14,4 +14,5 @@ https://idyllic-nova-346502.wl.r.appspot.com/suggestions?q=London&latitude=42.86
 
 ## Captura de pantalla
 
-![image](https://user-images.githubusercontent.com/46584463/162331122-4413c6e9-069c-48b9-9a76-48e18ca7ce41.png)
+![image](https://user-images.githubusercontent.com/46584463/162331288-e686dfe3-2bc8-4b74-9cbb-70cf3156938b.png)
+
