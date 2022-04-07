@@ -2,13 +2,13 @@ package com.joel.service;
 
 import java.util.List;
 
-import com.joel.domain.City;
 
 /**
  * @author Joel Rubio
  *
+ * @param <T>
  */
-public interface FileService {
+public interface FileService<T> {
 
-	List<City> parseFile(String file);
+	List<T> parseFile(String filePath);
 }

@@ -20,14 +20,14 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * Clase que se encarga de procesar
  * los datos que se encuentran en un
- * archivo tipo .tsv a un conjunto de filas.
+ * archivo tipo .tsv a un conjunto de ciudades.
  * 
  * @author Joel Rubio
  *
  */
 @Slf4j
 @Service
-public class TsvFileService implements FileService {
+public class TsvFileService implements FileService<City> {
 
 	private static final String TAB_CHARACTER = "\t";
 	private static final int INDEX_NAME       = 1;
@@ -39,9 +39,8 @@ public class TsvFileService implements FileService {
 	
 	
 	/**
-	 * Lee un archivo y retorna sus líneas o filas 
-	 * en forma de lista con sus columnas en un arreglo
-	 * de tipo String.
+	 * Lee un archivo y retorna sus líneas 
+	 * en forma de una lista de ciudades.
 	 * 
 	 * 
 	 * @param file
@@ -78,6 +77,15 @@ public class TsvFileService implements FileService {
 		return cloneList(cities);
 	}
 	
+	
+	/**
+	 * Itera una lista de ciudades
+	 * para clonar sus elementos.
+	 * 
+	 * @param cities
+	 * @return lista con los objetos de las
+	 * 		   ciudades clonadas
+	 */
 	private List<City> cloneList(List<City> cities) {
 		
 		return cities.parallelStream()
@@ -85,6 +93,13 @@ public class TsvFileService implements FileService {
 			.collect(Collectors.toList());
 	}
 	
+	/**
+	 * Crea un objeto City a partir de los
+	 * índices de un arreglo de tipo String.
+	 * 
+	 * @param fileRow
+	 * @return objeto que representa una ciudad
+	 */
 	private City mapToCity(String fileRow) {
 		
 		String[] splittedRow = fileRow.split(TAB_CHARACTER);

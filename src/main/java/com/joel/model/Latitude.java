@@ -1,4 +1,4 @@
-package com.joel.domain;
+package com.joel.model;
 
 import java.math.BigDecimal;
 
@@ -44,7 +44,7 @@ public class Latitude {
 	 * Obtiene la representación en cadena
 	 * de la latitud.
 	 * 
-	 * @return latitud en String
+	 * @return
 	 */
 	@Override
 	public String toString() {
@@ -54,9 +54,9 @@ public class Latitude {
 	
 	/**
 	 * Realiza la validación correspondiente para la latitud
-	 * del cajero automático o sucursal a buscar.
+	 * proporcionada por el usuario.
 	 * 
-	 * @param latitude latitud del cajero automático o sucursal a buscar
+	 * @param latitude
 	 */
 	private void validateLatitude(String latitude) {
 		
@@ -77,7 +77,7 @@ public class Latitude {
 	 * Valida que la latitud sea correcta, de lo contrarios,
 	 * arroja una expción.
 	 * 
-	 * @param latitude latitude del cajero automático o sucursal a buscar
+	 * @param latitude
 	 */
 	private void validateLatitudeRegex(String latitude) {
 		

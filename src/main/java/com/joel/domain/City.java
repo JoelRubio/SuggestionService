@@ -5,6 +5,9 @@ import lombok.Data;
 
 
 /**
+ * Clase que representa los
+ * valores de una ciudad.
+ * 
  * @author Joel Rubio
  *
  */
@@ -19,20 +22,30 @@ public class City {
 	private String code;
 	private double score;
 	
+	
+	/**
+	 * Suma cada nueva puntuación
+	 * con la actual.
+	 * 
+	 * @param score
+	 */
 	public void setScore(double score) {
 		
 		this.score += score;
 	}
 	
+	
 	/**
-	 *
+	 * Regresa un nuevo objeto de esta
+	 * clase con los valores del mismo
+	 * objeto. 
+	 * 
+	 * @return nuevo objeto con los mismo atributos
 	 */
 	public City clone() {
 		
-		City clonedCity = new City(this.name, this.latitude, 
-								  this.longitude, this.country, 
-								  this.code, this.score);
-		
-		return clonedCity;
+		return new City(this.name, this.latitude, 
+					    this.longitude, this.country, 
+					    this.code, this.score);
 	}
 }

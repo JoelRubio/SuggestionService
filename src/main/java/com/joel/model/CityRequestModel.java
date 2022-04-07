@@ -9,6 +9,10 @@ import lombok.ToString;
 
 
 /**
+ * Clase que representa los valores
+ * que proporciona el usuario para
+ * realizar la búsqueda de una ciudad.
+ * 
  * @author Joel Rubio
  *
  */

@@ -2,6 +2,14 @@ package com.joel.utils;
 
 import java.math.BigDecimal;
 
+/**
+ * Interfaz que contiene constantes
+ * relacionadas a la validación de los
+ * valores proporcinados por el usuario.
+ * 
+ * @author Joel Rubio
+ *
+ */
 public interface ValidationConstants {
 
 	//Ninguna coordenada (latitud y longitud) real puede tener este valor, 

@@ -3,8 +3,8 @@ package com.joel.utils;
 import java.math.BigDecimal;
 
 /**
- * Clase que representa una utilería
- * para el modelo GPS.
+ * Clase de utilería que se encarga 
+ * de validar los valores de una coordenada.
  * 
  * @author Joel Rubio
  *

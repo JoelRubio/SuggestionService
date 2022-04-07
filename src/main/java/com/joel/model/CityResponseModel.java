@@ -7,6 +7,10 @@ import lombok.ToString;
 
 
 /**
+ * Clase que representa los valores
+ * de una ciudad que coincide con los
+ * parámetros proporcionados por el usuario.
+ * 
  * @author Joel Rubio
  *
  */
@@ -16,15 +20,9 @@ import lombok.ToString;
 @EqualsAndHashCode
 public class CityResponseModel {
 
-	@SuppressWarnings("unused")
+	
 	private String name;
-	
-	@SuppressWarnings("unused")
 	private String latitude;
-	
-	@SuppressWarnings("unused")
 	private String longitude;
-	
-	@SuppressWarnings("unused")
 	private double score;
 }

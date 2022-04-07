@@ -1,4 +1,4 @@
-package com.joel.domain;
+package com.joel.model;
 
 import java.math.BigDecimal;
 
@@ -34,7 +34,7 @@ public class Longitude {
 	 * Verifica si la longitud está vacía.
 	 * 
 	 * @return true si la longitud está vacía (DEFAULT_VALUE),
-	 * 			    false de lo contrario
+	 * 		   false de lo contrario
 	 */
 	public boolean isEmpty() {
 		
@@ -46,7 +46,7 @@ public class Longitude {
 	 * Obtiene la representación en cadena
 	 * de la longitud.
 	 * 
-	 * @return longitud en String
+	 * @return longitud
 	 */
 	@Override
 	public String toString() {
@@ -56,11 +56,11 @@ public class Longitude {
 	
 	/**
 	 * Realiza la validación correspondiente para la longitud
-	 * del cajero automático o sucursal a buscar.
+	 * proporcionada por el usuario.
 	 * 
-	 * @param longitude longitud del cajero automático o sucursal a buscar
+	 * @param longitude
 	 */
-	private void validateLongitude(final String longitude) {
+	private void validateLongitude(String longitude) {
 		
 		if (longitude == null) {
 			
@@ -78,9 +78,9 @@ public class Longitude {
 	 * Valida que la longitud sea correcta, de lo contrario,
 	 * arroja una excepción.
 	 * 
-	 * @param longitude longitude del cajero automático o sucursal a buscar
+	 * @param longitude
 	 */
-	private void validateLongitudeRegex(final String longitude) {
+	private void validateLongitudeRegex(String longitude) {
 		
 		if (!longitude.matches(ValidationConstants.LONGITUDE_COORDINATE_REGEX)) {
 			

@@ -8,5 +8,4 @@ server:
 
 ws:
   endpoint: suggestions
-  file:
-    path: /home/joel/Downloads/backend-coding-challenge-one-master/data/cities_canada-usa.tsv
+  filePath: /home/joel/Downloads/backend-coding-challenge-one-master/data/cities_canada-usa.tsv

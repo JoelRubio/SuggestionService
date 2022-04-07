@@ -16,6 +16,8 @@ import com.joel.model.CityRequestModel;
 import com.joel.model.CityResponseModel;
 import com.joel.service.SuggestionService;
 
+import lombok.extern.slf4j.Slf4j;
+
 
 /**
  * Clase que se encarga de 
@@ -27,6 +29,7 @@ import com.joel.service.SuggestionService;
  * @author Joel Rubio
  *
  */
+@Slf4j
 @RestController
 @RequestMapping("/${ws.endpoint}")
 public class SuggestionController {
@@ -53,11 +56,13 @@ public class SuggestionController {
 	@ResponseStatus(code = HttpStatus.OK)
 	public Map<String, Iterable<CityResponseModel>> get(CityRequestModel cityRequest) {
 		
+		log.info("Request: {}", cityRequest.toString());
+		
 		if (cityRequest.isEmpty())
 			throw new IllegalQueryException("La consulta no puede estar vacía");
 		
 		CityQuery query = QueryFactory.getQuery(cityRequest);
 		
-		return Map.of("suggestions", this.suggestionService.getSuggestion(query));
+		return Map.of("suggestions", suggestionService.getSuggestion(query));
 	}
 }
