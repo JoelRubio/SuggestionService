@@ -1,7 +1,9 @@
 package com.joel.service.impl;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.nio.file.Files;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -55,7 +57,8 @@ public class TsvFileService implements FileService<City> {
 		
 		try {
 			
-			cities = Files.lines(file.getFile().toPath())
+			cities = new BufferedReader(new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_8))
+						.lines()
 						.map(this::mapToCity)
 						.collect(Collectors.toList());
 			
