@@ -2,7 +2,7 @@
 
 REST API que provee sugerencias para largas ciudades de acuerdo a ciertos parámetros.
 
-## Consumir el servicio
+## Consumo del servicio
 
 Este es un ejemplo de cómo consumir el servicio:
 
