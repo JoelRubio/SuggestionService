@@ -2,12 +2,11 @@ package com.joel.service.impl;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import com.joel.domain.City;
@@ -47,19 +46,16 @@ public class TsvFileService implements FileService<City> {
 	 * @return
 	 */
 	@Override
-	public List<City> parseFile(String file) {
+	public List<City> parseFile(Resource file) {
 		
 		if (!cities.isEmpty())
 			return cloneList(cities);
 		
 		log.info("Parsing TSV file...");
 		
-		Path filePath = Paths.get(file);
-		
 		try {
 			
-			cities = Files.lines(filePath)
-						.parallel()
+			cities = Files.lines(file.getFile().toPath())
 						.map(this::mapToCity)
 						.collect(Collectors.toList());
 			
@@ -88,7 +84,7 @@ public class TsvFileService implements FileService<City> {
 	 */
 	private List<City> cloneList(List<City> cities) {
 		
-		return cities.parallelStream()
+		return cities.stream()
 			.map(city -> city.clone())
 			.collect(Collectors.toList());
 	}

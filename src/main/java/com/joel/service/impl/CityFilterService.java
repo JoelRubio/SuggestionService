@@ -42,7 +42,7 @@ public class CityFilterService implements FilterService<City, CityQuery> {
 		
 		log.info("Filtering cities...");
 		
-		List<City> matchedCities = cities.parallelStream()
+		List<City> matchedCities = cities.stream()
 			.filter(city -> verify(city, query))
 			.collect(Collectors.toList()); 
 		
