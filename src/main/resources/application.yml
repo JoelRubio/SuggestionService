@@ -4,7 +4,7 @@ spring:
 
 gcloud:
   projectId: idyllic-nova-346502
-  jsonKey: /home/joelrubio021/key.json
+  jsonKey: classpath:key.json
   bucket: app-spring-bucket
   object: cities_canada-usa.tsv
 
