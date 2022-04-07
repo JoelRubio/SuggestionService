@@ -2,8 +2,6 @@ package com.joel.service;
 
 import java.util.List;
 
-import org.springframework.core.io.Resource;
-
 
 /**
  * @author Joel Rubio
@@ -12,5 +10,5 @@ import org.springframework.core.io.Resource;
  */
 public interface FileService<T> {
 
-	List<T> parseFile(Resource file);
+	List<T> parseFile();
 }

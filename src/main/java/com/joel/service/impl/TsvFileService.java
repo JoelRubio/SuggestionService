@@ -1,18 +1,18 @@
 package com.joel.service.impl;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.core.io.Resource;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.joel.domain.City;
 import com.joel.domain.Country;
+import com.joel.service.CloudStorage;
 import com.joel.service.FileService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -38,7 +38,12 @@ public class TsvFileService implements FileService<City> {
 	private static final int INDEX_CODE       = 10;
 	private List<City> cities                 = new ArrayList<>();
 	
+	private CloudStorage cloudStorage;
 	
+	public TsvFileService(CloudStorage cloudStorage) {
+		this.cloudStorage = cloudStorage;
+	}
+
 	/**
 	 * Lee un archivo y retorna sus líneas 
 	 * en forma de una lista de ciudades.
@@ -48,7 +53,7 @@ public class TsvFileService implements FileService<City> {
 	 * @return
 	 */
 	@Override
-	public List<City> parseFile(Resource file) {
+	public List<City> parseFile() {
 		
 		if (!cities.isEmpty())
 			return cloneList(cities);
@@ -56,11 +61,11 @@ public class TsvFileService implements FileService<City> {
 		log.info("Parsing TSV file...");
 		
 		try {
-			
-			cities = new BufferedReader(new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_8))
-						.lines()
-						.map(this::mapToCity)
-						.collect(Collectors.toList());
+					
+			cities = Files.lines(cloudStorage.getPath()
+					.orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR)))
+				.map(this::mapToCity)
+				.collect(Collectors.toList());
 			
 		} catch (IOException exception) {
 			

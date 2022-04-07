@@ -4,8 +4,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import com.joel.domain.City;
@@ -32,9 +30,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 public class SuggestionServiceImpl implements SuggestionService {
-
-	@Value("${ws.filePath}")
-	private Resource file;
 	
 	private FileService<City> fileService;
 	private FilterService<City, CityQuery> filterService;
@@ -62,7 +57,7 @@ public class SuggestionServiceImpl implements SuggestionService {
 	@Override
 	public Iterable<CityResponseModel> getSuggestion(CityQuery query) {
 		
-		List<City> cities = fileService.parseFile(file);
+		List<City> cities = fileService.parseFile();
 		
 		if (cities.isEmpty())
 			return List.of();

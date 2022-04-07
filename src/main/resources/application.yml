@@ -2,10 +2,15 @@ spring:
   application:
     name: suggestion-service
 
+gcloud:
+  projectId: idyllic-nova-346502
+  jsonKey: /home/joelrubio021/key.json
+  bucket: app-spring-bucket
+  object: cities_canada-usa.tsv
+
 server:
   error:
     include-message: always
 
 ws:
   endpoint: suggestions
-  filePath: gs://app-spring-bucket/cities_canada-usa.tsv
