@@ -8,4 +8,6 @@ Este es un ejemplo de cómo consumir el servicio:
 
 https://idyllic-nova-346502.wl.r.appspot.com/suggestions?q=London&latitude=42.86509&longitude=-71.3739
 
-El parámetro de búsqueda necesario para obtener sugerencias es el término a buscar (q), por lo que la latitud (latitude) y longitud (longitude) son opcionales.
+## Consideraciones
+
+- El parámetro de búsqueda necesario para obtener sugerencias es el término a buscar (q), por lo que la latitud (latitude) y longitud (longitude) son opcionales.
