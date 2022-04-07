@@ -12,6 +12,6 @@ https://idyllic-nova-346502.wl.r.appspot.com/suggestions?q=London&latitude=42.86
 
 - El parámetro de búsqueda necesario para obtener sugerencias es el término a buscar (q), por lo que la latitud (latitude) y longitud (longitude) son opcionales.
 
-## Resultado
+## Captura de pantalla
 
 ![image](https://user-images.githubusercontent.com/46584463/162331122-4413c6e9-069c-48b9-9a76-48e18ca7ce41.png)
