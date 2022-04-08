@@ -6,7 +6,7 @@ REST API que provee sugerencias para largas ciudades de acuerdo a ciertos parám
 
 Este es un ejemplo de cómo consumir el API:
 
-https://idyllic-nova-346502.wl.r.appspot.com/suggestions?q=London&latitude=42.86509&longitude=-71.3739
+curl -X GET "https://idyllic-nova-346502.wl.r.appspot.com/suggestions?q=London&latitude=42.86509&longitude=-71.3739"
 
 ## Consideraciones
 
